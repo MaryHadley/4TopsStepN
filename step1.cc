@@ -664,18 +664,21 @@ void step1::Loop()
 
 
    // basic cuts
-   float metCut=50;
-   int   htCut=450;
+   float metCut=50; //consistent with  2016 analysis 
+   int   htCut=500; //correct with following 2016 analysis 
    int   nAK8jetsCut=0;
    float JetLeadPtCut=0;
    float JetSubLeadPtCut=0;
-   float lepPtCut=50;
-   float elEtaCut=2.5;
-   float muEtaCut=2.4;
-   float jetEtaCut=2.4;
+   float lepPtCut=35; //this satisfies the more stringent criteria from the 2016 analysis, which is for electrons, but we need to change things and add in different cuts for muons and electrons 
+   float elEtaCut=2.1; // consistent with 2016 analysis 
+   float muEtaCut=2.1; //consistent with 2016 analysis 
+   float jetEtaCut=2.4; //consistent with 2016 analysis 
    float ak8EtaCut=2.4;
-   float jetPtCut=30;
-
+   float jetPtCut=30; //consistent with 2016 analysis 
+   float elPtCut = 35; //adding a new cut variable needed for 4 tops specifically, this value is consistent with 2016 analysis
+   float muPtCut = 26; //adding a new cut variable needed for 4 tops specifically, this value is consistent with 2016 analysis 
+   float distToSigLepCut = 0.4; //adding a new variable needed for 4 tops specifically, this value is consistent with 2016 analysis 
+  
    // counters
    int n_vectorSizeMismatch = 0;
 
@@ -705,7 +708,8 @@ void step1::Loop()
    TLorentzVector tjet1_lv;
    TLorentzVector lepton_lv;
    TLorentzVector ak8_lv;
-  
+   TLorentzVector el_lv; //new variable needed specifically for 4 tops 
+   TLorentzVector mu_lv; //new variable needed specifically for 4 tops
    // W tagging efficiencies. Assumes each signal mass uses the same pT bins but has unique values.
    std::vector<float> ptRangeTpTp, ptRangeTTbar;
    float ptminTTbar[12] = {175,200,250,300,350,400,450,500,550,600,700,800};
@@ -3105,3 +3109,4 @@ void step1::Loop()
    outputTree->Write();
 
 }
+
