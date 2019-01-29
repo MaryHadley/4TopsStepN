@@ -947,10 +947,8 @@ public :
    vector<double>  *theJetAK8SoftDropn3b2_JetSubCalc;
    vector<double>  *theJetCSVb_JetSubCalc;
    vector<double>  *theJetCSVbb_JetSubCalc;
-   vector<double>  AK4JetBDeepCSVb_singleLepCalc_PtOrdered;
-   //vector<double>  theJetCSVb_JetSubCalc_PtOrdered;
-   //vector<double>  theJetCSVbb_JetSubCalc_PtOrdered;
-   vector <double>  AK4JetBDeepCSVbb_singleLepCalc_PtOrdered;
+   vector<double>  theJetCSVb_JetSubCalc_PtOrdered;
+   vector<double>  theJetCSVbb_JetSubCalc_PtOrdered;
    vector<double>  *theJetEnergy_JetSubCalc;
    vector<double>  *theJetEta_JetSubCalc;
    vector<double>  *theJetPhi_JetSubCalc;

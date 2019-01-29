@@ -1546,7 +1546,7 @@ step1::step1(TString inputFileName, TString outputFileName) : inputTree(0), inpu
 // if parameter tree is not specified (or zero), connect the file
 // used to generate this class and read the Tree.
 
-
+//yiting's note
   isSig  = (inputFileName.Contains("prime") || inputFileName.Contains("X53") || inputFileName.Contains("ChargedHiggs_Hplus"));
   if(isSig){
     if(inputFileName.Contains("Tprime")) isTpTp = true;
