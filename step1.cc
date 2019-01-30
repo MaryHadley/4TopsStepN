@@ -695,6 +695,8 @@ void step1::Loop()
    int npass_JetLeadPt    = 0;
    int npass_JetSubLeadPt = 0;
    int npass_lepPt        = 0;
+   int npass_elPt         = 0;
+   int npass_muPt         = 0;
    int npass_ElEta        = 0;
    int npass_MuEta        = 0;
    int npass_all          = 0;
@@ -1443,6 +1445,16 @@ void step1::Loop()
       int isPastLepPtCut = 0;
       if(leppt > lepPtCut){npass_lepPt+=1;isPastLepPtCut=1;}
       
+      int isPastElPtCut = 0;
+      if(isElectron){
+          if (leppt > elPtCut) {npass_elPt  += 1; isPastElPtCut =1;}
+      }
+      
+      int isPastMuPtCut = 0;
+      if(isMuon){
+          if (leppt > muPtCut) {npass_muPt  += 1; isPastMuPtCut =1;}
+      }
+      
       int isPastElEtaCut = 0;
       int isPastMuEtaCut = 0;
       if(isElectron && fabs(lepeta) < elEtaCut){npass_ElEta+=1;isPastElEtaCut=1;}
@@ -1458,9 +1470,11 @@ void step1::Loop()
       // Skip failing events
       // ----------------------------------------------------------------------------
             
-      if(!(isPastMETcut && isPastHTCut && isPastNAK8JetsCut && isPastJetLeadPtCut && isPastLepPtCut && (isPastElEtaCut || isPastMuEtaCut) && isPastJetSubLeadPtCut)) continue;
+      if(!(isPastMETcut && isPastHTCut  && (isPastElPtCut || isPastMuPtCut) && (isPastElEtaCut || isPastMuEtaCut))) continue;
       npass_all+=1;
       
+      //isPastLepPtCut remove this, it is not applicable for 4 tops, since we have different pt cuts for electrons versus muons
+      // isPastNAK8JetsCut remove this cut for now //isPastJetLeadPtCut remove for now //&& isPastJetSubLeadPtCut remove for now
       ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       /////////////// ONLY ON SELECTED EVENTS ////////////////////////////////////////////////////////////////////////////////////
@@ -3080,7 +3094,12 @@ void step1::Loop()
    std::cout<<"Npassed_HT             = "<<npass_ht<<" / "<<nentries<<std::endl;
    std::cout<<"Npassed_ALL            = "<<npass_all<<" / "<<nentries<<std::endl;
    std::cout<<"Npassed_ThreeJets      = "<<npass_ThreeJets<<" / "<<nentries<<std::endl;
-
+   std::cout<<"Npassed_ElPtCut        = "<<npass_elPt<<"      / "<<nentries<<std::endl;
+   std::cout<<"Npassed_MuPtCut          = "<<npass_muPt<<"      / "<<nentries<<std::endl;
+   
+   
+   
+  
    // jProb_BEST->Write();
    // tProb_BEST->Write();
    // HProb_BEST->Write();
