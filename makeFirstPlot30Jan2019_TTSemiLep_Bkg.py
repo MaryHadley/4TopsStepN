@@ -29,7 +29,7 @@ h_mu_avg_AK4HT_vs_nJets = ROOT.TProfile("mu_prof_nJets_vs_avg_AK4HT", "Average A
 
 h_el_avg_AK4HT_vs_nJets = ROOT.TProfile("el_prof_nJets_vs_avg_AK4HT", "Average AK4HT by Jet Multiplicity for TTSemiLep  El Events (GeV); nJets; Avg. AK4HT (GeV)", 8, 6, 13)
 
-f = ROOT.TFile("Mary_test_TTSemiLep_17_MC_Bkg_29_Jan_2019.root")
+f = ROOT.TFile("Mary_test_TTSemiLep_17_MC_Bkg_6_Feb_2019.root")
 print "I got the file!"
 
 t = f.Get("ljmet")
@@ -40,7 +40,7 @@ t.Print()
 for event in t:
     nEvents +=1
     if event.isMuon == 1:
-        #print "I am a muon event!"
+        print "I am a muon event!"
         nMuEvents += 1
         
         if event.NJets_JetSubCalc < 7:
@@ -70,7 +70,7 @@ for event in t:
             mu13jets +=1
      
     if event.isElectron ==1:
-        #print "I am an electron event!"
+        print "I am an electron event!"
         nElEvents += 1
         if event.NJets_JetSubCalc < 8:
            continue
@@ -117,12 +117,12 @@ print "el12jets is:", el12jets
 #Draw histograms
 c1 = ROOT.TCanvas()
 ROOT.gStyle.SetStatX(.7)
-h_mu_nJets_vs_AK4HT.Scale(50.) #lumi recorded in 2017 is 45 inv  fb, cross section for TTSemiLep  is (831000*0.438) fb aka 363978 fb (this info on inclusive xsec times BF comes from Julie), nEventsGenerated before any cuts is 328994 for the file files I ran over
+h_mu_nJets_vs_AK4HT.Scale(121.) #lumi recorded in 2017 is 45 inv  fb, cross section for TTSemiLep  is (831000*0.438) fb aka 363978 fb (this info on inclusive xsec times BF comes from Julie), nEventsGenerated before any cuts is 328994 for the file files I ran over
 h_mu_nJets_vs_AK4HT.Draw("COLZ")
 c1.SaveAs("TTSemiLep_Bkg_mu_nJets_vs_AK4HT.pdf")
 
 c2 = ROOT.TCanvas()
-ROOT.gStyle.SetStatX(.7)
+ROOT.gStyle.SetStatX(121)
 h_el_nJets_vs_AK4HT.Scale(50.) #lumi recorded in 2017 is 45 inv fb, cross section for TTSemiLep  is (831000 * .438)  fb aka 363978 fb, nEventsGenerated before any cuts is 328994 for the file files I ran over
 h_el_nJets_vs_AK4HT.Draw("COLZ")
 c2.SaveAs("TTSemiLep_Bkg_el_nJets_vs_AK4HT.pdf")
