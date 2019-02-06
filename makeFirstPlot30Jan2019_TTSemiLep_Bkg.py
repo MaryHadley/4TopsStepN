@@ -21,13 +21,13 @@ el11jets = 0
 el12jets = 0
 
 #Define histograms
-h_mu_nJets_vs_AK4HT = ROOT.TH2F("NJets_vs_AK4HT_mu", "AK4 Jet HT vs. nJets in the Event for TTSemiLep  Mu Events; nJets; AK4HT (GeV)", 8, 6, 13, 50, 400, 800) #maybe tweak this
+h_mu_nJets_vs_AK4HT = ROOT.TH2F("NJets_vs_AK4HT_mu", "AK4 Jet HT vs. nJets in the Event for TTSemiLep  Mu Events; nJets; AK4HT (GeV)", 7, 5.5, 12.5, 50, 400, 800) #maybe tweak this
 
-h_el_nJets_vs_AK4HT = ROOT.TH2F("NJets_vs_AK4HT_el", "AK4 Jet HT vs. NJets in the Event for TTSemiLep  El Events; nJets; AK4HT (GeV)", 8, 6, 13, 50, 400, 800)
+h_el_nJets_vs_AK4HT = ROOT.TH2F("NJets_vs_AK4HT_el", "AK4 Jet HT vs. NJets in the Event for TTSemiLep  El Events; nJets; AK4HT (GeV)", 7, 5.5, 12.5, 50, 400, 800)
 
-h_mu_avg_AK4HT_vs_nJets = ROOT.TProfile("mu_prof_nJets_vs_avg_AK4HT", "Average AK4HT by Jet Multiplicity for TTSemiLep  Mu Events (GeV); nJets; Avg. AK4HT (GeV)", 8, 6, 13)
+h_mu_avg_AK4HT_vs_nJets = ROOT.TProfile("mu_prof_nJets_vs_avg_AK4HT", "Average AK4HT by Jet Multiplicity for TTSemiLep Events; nJets; Avg. AK4HT (GeV)", 7, 5.5, 12.5)
 
-h_el_avg_AK4HT_vs_nJets = ROOT.TProfile("el_prof_nJets_vs_avg_AK4HT", "Average AK4HT by Jet Multiplicity for TTSemiLep  El Events (GeV); nJets; Avg. AK4HT (GeV)", 8, 6, 13)
+h_el_avg_AK4HT_vs_nJets = ROOT.TProfile("el_prof_nJets_vs_avg_AK4HT", "Average AK4HT by Jet Multiplicity for TTSemiLep Events; nJets; Avg. AK4HT (GeV)", 7, 5.5, 12.5)
 
 f = ROOT.TFile("Mary_test_TTSemiLep_17_MC_Bkg_6_Feb_2019.root")
 print "I got the file!"
@@ -116,37 +116,54 @@ print "el12jets is:", el12jets
 
 #Draw histograms
 c1 = ROOT.TCanvas()
-ROOT.gStyle.SetStatX(.7)
+#ROOT.gStyle.SetStatX(.7)
+ROOT.gStyle.SetOptStat(0)
 h_mu_nJets_vs_AK4HT.Scale(121.) #lumi recorded in 2017 is 45 inv  fb, cross section for TTSemiLep  is (831000*0.438) fb aka 363978 fb (this info on inclusive xsec times BF comes from Julie), nEventsGenerated before any cuts is 328994 for the file files I ran over
 h_mu_nJets_vs_AK4HT.Draw("COLZ")
 c1.SaveAs("TTSemiLep_Bkg_mu_nJets_vs_AK4HT.pdf")
 
 c2 = ROOT.TCanvas()
-ROOT.gStyle.SetStatX(121)
+#ROOT.gStyle.SetStatX(.7)
+ROOT.gStyle.SetOptStat(0)
 h_el_nJets_vs_AK4HT.Scale(50.) #lumi recorded in 2017 is 45 inv fb, cross section for TTSemiLep  is (831000 * .438)  fb aka 363978 fb, nEventsGenerated before any cuts is 328994 for the file files I ran over
 h_el_nJets_vs_AK4HT.Draw("COLZ")
 c2.SaveAs("TTSemiLep_Bkg_el_nJets_vs_AK4HT.pdf")
 
 c3 = ROOT.TCanvas()
-ROOT.gStyle.SetStatY(.4)
+#ROOT.gStyle.SetStatY(.4)
+ROOT.gStyle.SetOptStat(0)
 h_mu_avg_AK4HT_vs_nJets.Scale(1) #I think this is ok because it is an average already
+h_mu_avg_AK4HT_vs_nJets.SetLineColor(2)
 h_mu_avg_AK4HT_vs_nJets.Draw() 
+l3 = ROOT.TLegend(.2,.2, .4, .4)
+l3.AddEntry(h_mu_avg_AK4HT_vs_nJets, 'Mu Events', 'l')
+l3.Draw()
 c3.SaveAs("TTSemiLep_Bkg_mu_prof_nJets_vs_avg_AK4HT.pdf")
 
 c4 = ROOT.TCanvas()
-ROOT.gStyle.SetStatY(.4)
+#ROOT.gStyle.SetStatY(.4)
+ROOT.gStyle.SetOptStat(0)
 h_el_avg_AK4HT_vs_nJets.Scale(1) #I think this is ok because it is an average already
+h_el_avg_AK4HT_vs_nJets.SetLineColor(3)
 h_el_avg_AK4HT_vs_nJets.Draw()
+l4 = ROOT.TLegend(.2,.2, .4, .4)
+l4.AddEntry(h_el_avg_AK4HT_vs_nJets, 'El Events', 'l')
+l4.Draw()
 c4.SaveAs("TTSemiLep_Bkg_el_prof_nJets_vs_avg_AK4HT.pdf")
 
 c5 = ROOT.TCanvas()
-ROOT.gStyle.SetStatY(.4)
+#ROOT.gStyle.SetStatY(.4)
+ROOT.gStyle.SetOptStat(0)
 h_mu_avg_AK4HT_vs_nJets.Scale(1) #I think this is ok because it is an average already 
 h_el_avg_AK4HT_vs_nJets.Scale(1) #same as above
 h_mu_avg_AK4HT_vs_nJets.SetLineColor(2)
 h_el_avg_AK4HT_vs_nJets.SetLineColor(3)
 h_mu_avg_AK4HT_vs_nJets.Draw()
 h_el_avg_AK4HT_vs_nJets.Draw("SAME")
+l5 = ROOT.TLegend(.2, .2, .4, .4)
+l5.AddEntry(h_mu_avg_AK4HT_vs_nJets, 'Mu Events', 'l')
+l5.AddEntry(h_el_avg_AK4HT_vs_nJets, 'El Events', 'l')
+l5.Draw()
 c5.SaveAs("TTSemiLep_Bkg_el_and_muon_together_prof_vs_avg_AK4HT.pdf")
 
 #debug
