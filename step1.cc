@@ -58,6 +58,8 @@ bool step1::applySF(bool& isTagged, float tag_SF, float tag_eff){
 
 
 
+
+
 // ----------------------------------------------------------------------------
 // MAIN EVENT LOOP
 // ----------------------------------------------------------------------------
@@ -657,7 +659,18 @@ void step1::Loop()
    // TH2D *WProb_DeepAK8_ = new TH2D("WProb_DeepAK8_","",200,-1,1,200,-1,1);
    // TH2D *ZProb_DeepAK8_ = new TH2D("ZProb_DeepAK8_","",200,-1,1,200,-1,1);
    // TH2D *bProb_DeepAK8_ = new TH2D("bProb_DeepAK8_","",200,-1,1,200,-1,1);
+   
+   
+   //----------------------------------------------------------------------------
+   //Define a cutflow histogram
   // ----------------------------------------------------------------------------
+     
+     TH1D *h_cutflow = new TH1D("h_cutflow", "", 20, 0, 20); //number of bins is dummy right now, I am just putting in something as a placeholder
+  
+  
+  
+  
+  //-----------------------------------------------------------------------------
   // Define and initialize objects / cuts / efficiencies
   // ----------------------------------------------------------------------------
 
@@ -974,12 +987,34 @@ void step1::Loop()
    Long64_t nentries = inputTree->GetEntriesFast();
 
    Long64_t nbytes = 0, nb = 0;
+   //my counters for cutflow
+   int nEntriesBeforeCuts = 0;
+   int nEntriesAfterCut1 = 0;
+   int nEntriesAfterCut2 = 0;
+   int nEntriesAfterCut3 = 0;
+   int nEntriesAfterCut4 = 0;
+   int nEntriesAfterCut5 = 0;
+   int nEntriesAfterCut6 = 0;
+   int nEntriesAfterCut7 = 0;
+   int nEntriesAfterCut8 = 0;
+   int nEntriesAfterCut9 = 0;
+   int nEntriesAfterCut10 = 0;
+   int nEntriesAfterCut11 = 0;
+   int nEntriesAfterCut12 = 0;
+   int nEntriesAfterCut13 = 0;
+   int nEntriesAfterCut14 = 0;
+   int nEntriesAfterCut15 = 0;
+   
+   
    for (Long64_t jentry=0; jentry<nentries;jentry++) {
       Long64_t ientry = LoadTree(jentry);
       if (ientry < 0) break;
       nb = inputTree->GetEntry(jentry);   nbytes += nb;
-      if (Cut(ientry) != 1) continue;
-      
+      nEntriesBeforeCuts +=1;
+      h_cutflow->Fill(1,1);
+      if (Cut(ientry) != 1) continue; //this cut doesn't seem to be doing anything, I asked Julie about it // Cut 1
+      nEntriesAfterCut1 +=1;
+      h_cutflow->Fill(2,1);
       //      if (ientry > 5000) continue;
       
       if(jentry % 1000 ==0) std::cout<<"Completed "<<jentry<<" out of "<<nentries<<" events"<<std::endl;
@@ -990,22 +1025,32 @@ void step1::Loop()
 
 
 
-      if(isTTincMtt0to700 && ttbarMass_TTbarMassCalc >= 700.) continue;
-      if(isTTincMtt0to1000 && ttbarMass_TTbarMassCalc >= 1000.) continue;
-      if(isTTincMtt700to1000 && (ttbarMass_TTbarMassCalc < 700. || ttbarMass_TTbarMassCalc >= 1000.)) continue;
-      if(isTTincMtt1000toInf && ttbarMass_TTbarMassCalc < 1000.) continue;
-      if(outBWBW && !isBWBW_TpTpCalc) continue;
-      if(outTZBW && !isTZBW_TpTpCalc) continue;
-      if(outTHBW && !isTHBW_TpTpCalc) continue;
-      if(outTZTH && !isTZTH_TpTpCalc) continue;
-      if(outTZTZ && !isTZTZ_TpTpCalc) continue;
-      if(outTHTH && !isTHTH_TpTpCalc) continue;
-      if(outTWTW && !isTWTW_TpTpCalc) continue;
-      if(outBZTW && !isBZTW_TpTpCalc) continue;
-      if(outBHTW && !isBHTW_TpTpCalc) continue;
-      if(outBZBH && !isBZBH_TpTpCalc) continue;
-      if(outBZBZ && !isBZBZ_TpTpCalc) continue;
-      if(outBHBH && !isBHBH_TpTpCalc) continue;
+      if(isTTincMtt0to700 && ttbarMass_TTbarMassCalc >= 700.) continue; //Cut 2
+      nEntriesAfterCut2 += 1;
+      h_cutflow->Fill(3,1); //bin you fill is always cutflow number + 1
+      if(isTTincMtt0to1000 && ttbarMass_TTbarMassCalc >= 1000.) continue; //Cut 3
+      nEntriesAfterCut3 +=1;
+      h_cutflow->Fill(4,1);
+      if(isTTincMtt700to1000 && (ttbarMass_TTbarMassCalc < 700. || ttbarMass_TTbarMassCalc >= 1000.)) continue; //Cut 4
+      nEntriesAfterCut4 += 1;
+      h_cutflow->Fill(5,1);
+      if(isTTincMtt1000toInf && ttbarMass_TTbarMassCalc < 1000.) continue; //Cut 5
+      nEntriesAfterCut5 += 1;
+      h_cutflow->Fill(6,1);
+      
+      //this is all T prime and B prime stuff from VLQ and I do not need it ///
+      //if(outBWBW && !isBWBW_TpTpCalc) continue; 
+      //if(outTZBW && !isTZBW_TpTpCalc) continue;
+      //if(outTHBW && !isTHBW_TpTpCalc) continue;
+     // if(outTZTH && !isTZTH_TpTpCalc) continue;
+     // if(outTZTZ && !isTZTZ_TpTpCalc) continue;
+     // if(outTHTH && !isTHTH_TpTpCalc) continue;
+     // if(outTWTW && !isTWTW_TpTpCalc) continue;
+    //  if(outBZTW && !isBZTW_TpTpCalc) continue;
+   //   if(outBHTW && !isBHTW_TpTpCalc) continue;
+   //   if(outBZBH && !isBZBH_TpTpCalc) continue;
+    //  if(outBZBZ && !isBZBZ_TpTpCalc) continue;
+   //   if(outBHBH && !isBHBH_TpTpCalc) continue;
 
       // ----------------------------------------------------------------------------
       // Assign as electron or muon event
@@ -1015,14 +1060,22 @@ void step1::Loop()
       isElectron = 0;
       isMuon = 0;
       if(elPt_singleLepCalc->size()==0 && muPt_singleLepCalc->size()==0){std::cout << "got no leptons, something wrong" << std::endl; continue;}
-      if(elPt_singleLepCalc->size()>0 && muPt_singleLepCalc->size()>0) std::cout << "got el and mu, something wrong" << std::endl;
-      if(elPt_singleLepCalc->size()>1 || muPt_singleLepCalc->size()>1) std::cout << "got more than one el or mu, something wrong" << std::endl;
+      nEntriesAfterCut6 +=1;
+      h_cutflow->Fill(7,1);
+      if(elPt_singleLepCalc->size()>0 && muPt_singleLepCalc->size()>0) std::cout << "got el and mu, something wrong" << std::endl; //should there be  a continue here?
+      if(elPt_singleLepCalc->size()>1 || muPt_singleLepCalc->size()>1) std::cout << "got more than one el or mu, something wrong" << std::endl; //should there be a continue here?
       if(elPt_singleLepCalc->size()>0 && muPt_singleLepCalc->size()==0) {isElectron = 1; isMuon = 0;}
       if(elPt_singleLepCalc->size()==0 && muPt_singleLepCalc->size()>0) {isElectron = 0; isMuon = 1;}
       if(isElectron==0 && isMuon==0){std::cout << "got no leptons, something wrong" << std::endl; continue;}
+      nEntriesAfterCut7+=1;
+      h_cutflow->Fill(8,1);
 
       if(isSM && isElectron == 1) continue;
+      nEntriesAfterCut8 +=1;
+      h_cutflow->Fill(9,1);
       if(isSE && isMuon == 1) continue;
+      nEntriesAfterCut9 +=1;
+      h_cutflow->Fill(10,1);
 
       double leppt = 0;
       double lepeta = 0;
@@ -1039,12 +1092,16 @@ void step1::Loop()
       if(bestsize != ak8ptsize){
 	std::cout << "Something's wrong! BEST has " << bestsize << " jets, expected " << ak8ptsize << std::endl;
 	continue;
+	
       }
+      nEntriesAfterCut10 +=1;
+      h_cutflow->Fill(11,1);
       if(deepak8size != ak8ptsize){
 	std::cout << "Something's wrong! DeepAK8 has " << bestsize << " jets, expected " << ak8ptsize << std::endl;
 	continue;
       }
-
+      nEntriesAfterCut11 +=1;
+      h_cutflow->Fill(12,1);
       // ----------------------------------------------------------------------------
       // Pileup weight calculation
       // ----------------------------------------------------------------------------
@@ -1317,6 +1374,8 @@ void step1::Loop()
       NJets_JetSubCalc = 0;
       AK4HT = 0;
       vector<pair<double,int>> jetptindpair;
+      
+      //Begin Jet loop!!
 
       for(unsigned int ijet=0; ijet < theJetPt_JetSubCalc->size(); ijet++){
 
@@ -1324,7 +1383,8 @@ void step1::Loop()
 	// Basic cuts
 	// ----------------------------------------------------------------------------
 
-	if(theJetPt_JetSubCalc->at(ijet) < jetPtCut || fabs(theJetEta_JetSubCalc->at(ijet)) > jetEtaCut) continue;
+	if(theJetPt_JetSubCalc->at(ijet) < jetPtCut || fabs(theJetEta_JetSubCalc->at(ijet)) > jetEtaCut) continue; 
+	
 
 	if(isMC){
 	  // ----------------------------------------------------------------------------
@@ -1429,7 +1489,7 @@ void step1::Loop()
       // ----------------------------------------------------------------------------
       // Apply kinematic cuts
       // ----------------------------------------------------------------------------
-	                
+	 //back to per event qualities aka out of the jet loop            
       int isPastHTCut = 0;
       if(AK4HT >= htCut){npass_ht+=1;isPastHTCut=1;}
 
@@ -1473,7 +1533,9 @@ void step1::Loop()
       // Skip failing events
       // ----------------------------------------------------------------------------
             
-      if(!(isPastMETcut && isPastHTCut  && (isPastElPtCut || isPastMuPtCut) && (isPastElEtaCut || isPastMuEtaCut))) continue;
+      if(!(isPastMETcut && isPastHTCut  && (isPastElPtCut || isPastMuPtCut) && (isPastElEtaCut || isPastMuEtaCut))) continue; //cut 12! the big one
+      nEntriesAfterCut12 +=1;
+      h_cutflow->Fill(13,1);
       npass_all+=1;
       
       //isPastLepPtCut remove this, it is not applicable for 4 tops, since we have different pt cuts for electrons versus muons
@@ -3100,10 +3162,47 @@ void step1::Loop()
    std::cout<<"Npassed_ALL            = "<<npass_all<<" / "<<nentries<<std::endl;
   
   std::cout<<"n_AK4jetstotal       = "<<n_AK4jetstotal<<" / "<<nentries<<std::endl;
+  std::cout<<"///////////////////////////////////////////"<<std::endl;
+  std::cout<<"Under Construction, Mary is testing stuff"<<std::endl;
+  std::cout<<"/////////////////////////////////////////"<<std::endl;
+  std::cout<<"nEntriesBeforeCuts      = "<<nEntriesBeforeCuts<<" / "<<nentries<<std::endl;
+  std::cout<<"nEntriesAfterCut1       = "<< nEntriesAfterCut1<<"  /  "<<nentries<<std::endl;
+  std::cout<<"nEntriesAfterCut2       = "<< nEntriesAfterCut2<<"  /  "<<nentries<<std::endl;
+  std::cout<<"nEntriesAfterCut3      = "<< nEntriesAfterCut3<<"  /  "<<nentries<<std::endl;
+  std::cout<<"nEntriesAfterCut4       = "<< nEntriesAfterCut4<<"  /  "<<nentries<<std::endl;
+  std::cout<<"nEntriesAfterCut5       = "<< nEntriesAfterCut5<<"  /  "<<nentries<<std::endl;
+  std::cout<<"nEntriesAfterCut6       = "<< nEntriesAfterCut6<<"  /  "<<nentries<<std::endl;
+  std::cout<<"nEntriesAfterCut7       = "<< nEntriesAfterCut7<<"  /  "<<nentries<<std::endl;
+  std::cout<<"nEntriesAfterCut8       = "<< nEntriesAfterCut8<<"  /  "<<nentries<<std::endl;
+  std::cout<<"nEntriesAfterCut9       = "<< nEntriesAfterCut9<<"  /  "<<nentries<<std::endl;
+  std::cout<<"nEntriesAfterCut10       = "<< nEntriesAfterCut10<<"  /  "<<nentries<<std::endl;
+  std::cout<<"nEntriesAfterCut11       = "<< nEntriesAfterCut11<<"  /  "<<nentries<<std::endl;
+  std::cout<<"nEntriesAfterCut12      = "<< nEntriesAfterCut12<<"  /  "<<nentries<<std::endl;
    
-   
-   
+   ofstream myfile;
+   myfile.open("cutflow.txt");
+   myfile << "Cutflow Table. \n"
+   <<"///////////////////////////////////////// \n"
+   <<"Denominator is all the entries read in by the GetEntriesFastFunction. \n"
+   <<"///////////////////////////////////////// \n"
+   <<"nEntriesBeforeCuts      = "<<nEntriesBeforeCuts<<" / "<<nentries<<std::endl
+   <<"nEntriesAfterCut1       = "<< nEntriesAfterCut1<<"  /  "<<nentries<<std::endl
+   <<"nEntriesAfterCut2       = "<< nEntriesAfterCut2<<"  /  "<<nentries<<std::endl
+   <<"nEntriesAfterCut3      = "<< nEntriesAfterCut3<<"  /  "<<nentries<<std::endl
+  <<"nEntriesAfterCut4       = "<< nEntriesAfterCut4<<"  /  "<<nentries<<std::endl
+  <<"nEntriesAfterCut5       = "<< nEntriesAfterCut5<<"  /  "<<nentries<<std::endl
+  <<"nEntriesAfterCut6       = "<< nEntriesAfterCut6<<"  /  "<<nentries<<std::endl
+  <<"nEntriesAfterCut7       = "<< nEntriesAfterCut7<<"  /  "<<nentries<<std::endl
+  <<"nEntriesAfterCut8       = "<< nEntriesAfterCut8<<"  /  "<<nentries<<std::endl
+  <<"nEntriesAfterCut9       = "<< nEntriesAfterCut9<<"  /  "<<nentries<<std::endl
+  <<"nEntriesAfterCut10       = "<< nEntriesAfterCut10<<"  /  "<<nentries<<std::endl
+  <<"nEntriesAfterCut11       = "<< nEntriesAfterCut11<<"  /  "<<nentries<<std::endl
+  <<"nEntriesAfterCut12      = "<< nEntriesAfterCut12<<"  /  "<<nentries<<std::endl; 
+   myfile.close();
   
+   //I can either have no semicolons at the end of the endls (except for the last one) as I did here, or I can have myfile before ever << aka myfile <<nEntriesAfterCut2       = "<< nEntriesAfterCut2<<"  /  "<<nentries<<std::endl;
+   
+  h_cutflow->Write();
    // jProb_BEST->Write();
    // tProb_BEST->Write();
    // HProb_BEST->Write();
