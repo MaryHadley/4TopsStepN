@@ -56,6 +56,12 @@ bool step1::applySF(bool& isTagged, float tag_SF, float tag_eff){
   return newTag;
 }
 
+int step1::foo(){
+std::cout<<"elephant gorilla pickles poodles"<<std::endl;
+
+return 0;
+}  
+
 
 
 
@@ -3199,7 +3205,14 @@ void step1::Loop()
   <<"nEntriesAfterCut11       = "<< nEntriesAfterCut11<<"  /  "<<nentries<<std::endl
   <<"nEntriesAfterCut12      = "<< nEntriesAfterCut12<<"  /  "<<nentries<<std::endl; 
    myfile.close();
-  
+
+//int foo(){
+//std::cout<<"gorilla pickles poodles \n";
+
+//return 0;
+//}  //this did not work because I was trying to define the function within another function
+
+foo();
    //I can either have no semicolons at the end of the endls (except for the last one) as I did here, or I can have myfile before ever << aka myfile <<nEntriesAfterCut2       = "<< nEntriesAfterCut2<<"  /  "<<nentries<<std::endl;
    
   h_cutflow->Write();

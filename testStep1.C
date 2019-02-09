@@ -16,7 +16,9 @@ void testStep1(){
   gSystem->AddIncludePath("-I$CMSSW_BASE/src/");
   
   step1 t(inputFile,outputFile);
+  t.foo();
   t.Loop();
+  
 }
 
 

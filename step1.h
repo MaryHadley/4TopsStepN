@@ -1525,6 +1525,7 @@ public :
    virtual Long64_t LoadTree(Long64_t entry);
    virtual void     Init(TTree *tree);
    virtual void     Loop();
+   virtual int      foo(); //my add with John, 8 Feb. 2019
    virtual Bool_t   Notify();
    virtual void     Show(Long64_t entry = -1);
    bool             applySF(bool& isTagged, float tag_SF, float tag_eff);
