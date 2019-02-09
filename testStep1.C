@@ -1,5 +1,5 @@
-#include "step1.cc" //you have to change this to match whatever the name of your .cc file is
-//#include "MARY_1FEB2019_step1.cc"
+//#include "step1.cc" //you have to change this to match whatever the name of your .cc file is
+#include "no_cuts_step1.cc"
 
 void testStep1(){
   
@@ -11,11 +11,11 @@ void testStep1(){
  //TString inputFile ="TT_17_MC_Bkg_List_1.root"; //TT semilep bkg
  TString inputFile="combined_TTSemiLep_bkg.root";
   
-  TString outputFile="Mary_test_TTSemiLep_17_MC_Bkg_6_Feb_2019_comb.root";
+  TString outputFile="No_Cuts_Mary_test_TTSemiLep_17_MC_Bkg_9_Feb_2019_comb.root";
   
   gSystem->AddIncludePath("-I$CMSSW_BASE/src/");
   
-  step1 t(inputFile,outputFile);
+  step1 t(inputFile,outputFile); //create an instance of the step1 class called t (could be d, dog, whatever, but then you would need to dog.foo, dog.loop)
   t.foo();
   t.Loop();
   
