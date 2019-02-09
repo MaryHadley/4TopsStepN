@@ -22,6 +22,8 @@ el12jets = 0
 #Define histograms
 h_mu_nJets_vs_AK4HT = ROOT.TH2F("NJets_vs_AK4HT_mu", "AK4 Jet HT vs. nJets in the Event for 4 Tops Mu Events; nJets; AK4HT (GeV)", 7, 5.5, 12.5, 50, 400, 1200) #maybe tweak this
 
+#h_test = h_mu_nJets_vs_AK4HT.ProjectionX()
+
 h_el_nJets_vs_AK4HT = ROOT.TH2F("NJets_vs_AK4HT_el", "AK4 Jet HT vs. NJets in the Event for 4 Tops El Events; nJets; AK4HT (GeV)", 7, 5.5, 12.5 , 50, 400, 1200)
 
 h_mu_avg_AK4HT_vs_nJets = ROOT.TProfile("mu_prof_nJets_vs_avg_AK4HT", "Average AK4HT by Jet Multiplicity for 4 Tops Events; nJets; Avg. AK4HT (GeV)", 7, 5.5, 12.5)
@@ -161,3 +163,8 @@ l5.AddEntry(h_mu_avg_AK4HT_vs_nJets, 'Mu Events', 'l')
 l5.AddEntry(h_el_avg_AK4HT_vs_nJets, 'El Events', 'l')
 l5.Draw()
 c5.SaveAs("4T_Sig_el_and_muon_together_prof_vs_avg_AK4HT.pdf")
+
+h_test = h_mu_nJets_vs_AK4HT.ProjectionX()
+c6 = ROOT.TCanvas()
+h_test.Draw()
+c6.SaveAs("maryTestXProjection.pdf")
